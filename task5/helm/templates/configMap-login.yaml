@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-login-config
+data:
+  MYSQL_DB_HOST: "{{ .Values.login.mysql.host }}"
+  MYSQL_DB_PORT: "{{ .Values.login.mysql.port }}"
+  
+  # Cross-Cloud
+  {{- if eq .Values.global.environment "azure" }}
+  
+  REDIRECT_URL: "http://136.119.155.165"
+  CHAT_ENDPOINT: "http://136.119.155.165/chat"
+  {{- else }}
+  
+  REDIRECT_URL: "http://spring-chat-service:8080"
+  CHAT_ENDPOINT: "http://spring-chat-service:8080"
+  {{- end }}

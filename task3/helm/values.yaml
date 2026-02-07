@@ -1,0 +1,22 @@
+weCloud:
+  imageRegistry:
+    gcp: # TODO: Specify your GCP Artifact Registry
+
+profile:
+  # TODO: Specify values used in deployment.yaml
+  releaseName: "spring-profile"
+  replicaCount:
+  repository:
+  image:
+  tag:
+  # TODO: Specify values used in service.yaml
+  service:
+    type:
+    port:
+    targetPort:
+  # TODO: Specify values for MySQL environment variables
+  mysql:
+    host: "mysql-profile.default.svc.cluster.local"
+    user: "your_user_name"
+    password: "your_db_password"
+    port: "3306"

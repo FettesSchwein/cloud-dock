@@ -1,0 +1,43 @@
+# TODO: Implement the deployment configuration for the login service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-login-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring-login
+  template:
+    metadata:
+      labels:
+        app: spring-login
+    spec:
+      imagePullSecrets:    
+        - name: gcr-json-key
+      containers:
+        - name: login-service
+          image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.login.image }}:{{ .Values.login.tag }}
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: spring-login-config
+          env:
+            - name: MYSQL_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: login-secret
+                  key: mysql-username
+            - name: MYSQL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: login-secret
+                  key: mysql-password
+            - name: MYSQL_DB_HOST
+              value: "{{ .Values.login.mysql.host }}"
+            - name: MYSQL_DB_PORT
+              value: "{{ .Values.login.mysql.port }}"
+            - name: REDIRECT_URL
+              value: "http://{{ .Values.login.redirectIP }}"
+

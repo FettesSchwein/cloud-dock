@@ -1,0 +1,26 @@
+global:
+  environment: azure
+
+
+
+login:
+  image: "login-service"
+  
+  repository: "wecloudacr54321.azurecr.io/login-service"
+  tag: "1.0.0"
+  mysql:
+  
+    host: "mysql-login.default.svc.cluster.local"
+    user: "loginuser"
+    password: "LoginPass123"
+
+profile:
+  image: "profile-service"
+  
+  repository: "wecloudacr54321.azurecr.io/profile-service"
+  tag: "1.0.0"
+  mysql:
+    
+    host: "mysql-profile.default.svc.cluster.local"
+    user: "profileuser"
+    password: "ProfilePass123"

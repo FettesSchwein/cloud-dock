@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-profile-config
+data:
+  MYSQL_DB_HOST: 'mysql-profile.default.svc.cluster.local'
+  MYSQL_DB_PORT: '3306'

@@ -1,0 +1,17 @@
+global:
+  environment: gcp
+
+chat:
+  
+  image: "chat-service"
+  tag: "1.0.0"
+
+login:
+  
+  image: "login-service"
+  tag: "1.0.0"
+
+profile:
+  
+  image: "profile-service"
+  tag: "1.0.0"

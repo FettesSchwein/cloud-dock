@@ -1,0 +1,20 @@
+# Cloud credentials (CRITICAL)
+.config/
+.aws/
+.azure/
+.kube/
+
+# Env & secrets
+.env
+*.key
+*.pem
+*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+

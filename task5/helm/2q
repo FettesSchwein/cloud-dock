@@ -1,0 +1,66 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-login-deployment
+  labels:
+    app: spring-login
+spec:
+  selector:
+    matchLabels:
+      app: spring-login
+  template:
+    metadata:
+      labels:
+        app: spring-login
+    spec:
+      imagePullSecrets:
+        - name: gcr-json-key
+      containers:
+        - name: login-service
+          image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.login.image }}:{{ .Values.login.tag }}
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: {{ .Values.login.hpa.cpuRequest }}
+          envFrom:
+            - configMapRef:
+                name: spring-login-config
+          env:
+            - name: MYSQL_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: login-secret
+                  key: mysql-username
+            - name: MYSQL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: login-secret
+                  key: mysql-password
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://{{ .Values.login.mysql.host }}:{{ .Values.login.mysql.port }}/logindb
+            - name: MYSQL_DB_HOST
+              value: "{{ .Values.login.mysql.host }}"
+            - name: MYSQL_DB_PORT
+              value: "{{ .Values.login.mysql.port }}"
+            - name: REDIRECT_URL
+              value: "http://{{ .Values.login.redirectIP }}"
+
+---
+
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: spring-login-autoscaling
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: spring-login-deployment
+  minReplicas: {{ .Values.login.hpa.minReplicas }}
+  maxReplicas: {{ .Values.login.hpa.maxReplicas }}
+  targetCPUUtilizationPercentage: {{ .Values.login.hpa.targetCPUUtilizationPercentage}}
+

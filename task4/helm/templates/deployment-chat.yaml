@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-chat-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring-chat
+  template:
+    metadata:
+      labels:
+        app: spring-chat
+    spec:
+      imagePullSecrets:    
+        - name: gcr-json-key
+      containers:
+        - name: chat-service
+          image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.chat.image }}:{{ .Values.chat.tag }}
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: spring-chat-config
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://{{ .Values.chat.mysql.host }}:{{ .Values.chat.mysql.port }}/chatdb
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: chat-secret
+                  key: mysql-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chat-secret
+                  key: mysql-password
+            - name: REDIS_HOST
+              value: "{{ .Values.chat.redis.host }}"
+            - name: REDIS_PORT
+              value: "{{ .Values.chat.redis.port }}"
+
