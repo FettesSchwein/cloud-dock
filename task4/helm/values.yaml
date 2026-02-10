@@ -37,7 +37,7 @@ chat:
     port: "3306"
     user: "chatuser"
     password: "ChatPass123"
-  profileEndpoints: "spring-profile-service.default.svc.cluster.local" 
+  profileEndpoints: "spring-profile-service.default.svc.cluster.local:80" 
 
 login:
 
