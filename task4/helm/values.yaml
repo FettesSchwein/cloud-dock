@@ -44,7 +44,7 @@ login:
   releaseName: spring-login
   replicaCount: 3
   image: login-service
-  tag: "1.0.3"
+  tag: "1.0.4"
   repository: login-service
   containerPort: 8080
   service:
