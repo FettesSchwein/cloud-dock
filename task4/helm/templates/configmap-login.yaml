@@ -5,4 +5,6 @@ metadata:
 data:
   MYSQL_DB_HOST: {{ .Values.login.mysql.host | quote }}
   MYSQL_DB_PORT: {{ .Values.login.mysql.port | quote }}
+  MYSQL_DB_NAME: "login"
+  CHAT_ENDPOINT: {{ printf "http://%s/chat" .Values.login.redirectHost | quote }}
   REDIRECT_HOST: {{ .Values.login.redirectHost | quote }}
