@@ -35,8 +35,8 @@ chat:
   mysql:
     host: mysql-chat
     port: "3306"
-    user: weclouduser
-    password: WeCloudPass!
+    user: "chatuser"
+    password: "ChatPass123"
   profileEndpoints: "spring-profile-service.default.svc.cluster.local" 
 
 login:
@@ -54,8 +54,8 @@ login:
   mysql:
     host: mysql-login
     port: "3306"
-    user: weclouduser
-    password: WeCloudPass!
+    user: "loginuser"
+    password: "LoginPass123"
   redirectHost: "35.188.161.210" 
 
 redis:

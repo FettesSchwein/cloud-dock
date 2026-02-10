@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-chat-deployment
+  name: {{ .Values.chat.releaseName }}-deployment
 spec:
-  replicas: {{ .Values.chat.replicaCount | default 1 }}
+  replicas: {{ .Values.chat.replicaCount }}
   selector:
     matchLabels:
       app: spring-chat
@@ -12,37 +12,30 @@ spec:
       labels:
         app: spring-chat
     spec:
-      imagePullSecrets:
-        - name: gcr-json-key
-      initContainers:
-        - name: wait-for-mysql
-          image: busybox:1.28
-          command: ['sh', '-c', 'until nslookup {{ .Values.chat.mysql.host }}; do echo waiting for mysql; sleep 2; done']
       containers:
-        - name: chat-service
-          image: "{{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.chat.image }}:{{ .Values.chat.tag }}"
-          ports:
-            - containerPort: 8080
-          envFrom:
-            - configMapRef:
-                name: spring-chat-config
-            - secretRef:
-                name: chat-secret
-          env:
-            - name: SPRING_REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.redis.passwordSecret }}
-                  key: {{ .Values.redis.passwordKey }}
-          readinessProbe:
-            httpGet:
-              path: /chat
-              port: 8080
-            initialDelaySeconds: 45
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /chat
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 20
+      - name: chat-service
+        image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.chat.image }}:{{ .Values.chat.tag }}
+        ports:
+        - containerPort: {{ .Values.chat.service.targetPort }}
+        envFrom:
+        - configMapRef:
+            name: spring-chat-config
+        - secretRef:
+            name: chat-secret
+        env:
+        - name: SPRING_REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.redis.passwordSecret }}
+              key: {{ .Values.redis.passwordKey }}
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: chat-secret
+              key: mysql-username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: chat-secret
+              key: mysql-password
+

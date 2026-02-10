@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-login-deployment
+  name: {{ .Values.login.releaseName }}-deployment
 spec:
-  replicas: {{ .Values.login.replicaCount | default 1 }}
+  replicas: {{ .Values.login.replicaCount }}
   selector:
     matchLabels:
       app: spring-login
@@ -12,31 +12,25 @@ spec:
       labels:
         app: spring-login
     spec:
-      imagePullSecrets:
-        - name: gcr-json-key
-      initContainers:
-        - name: wait-for-mysql
-          image: busybox:1.28
-          command: ['sh', '-c', 'until nslookup {{ .Values.login.mysql.host }}; do echo waiting for mysql; sleep 2; done']
       containers:
-        - name: login-service
-          image: "{{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.login.image }}:{{ .Values.login.tag }}"
-          ports:
-            - containerPort: 8080
-          envFrom:
-            - configMapRef:
-                name: spring-login-config
-            - secretRef:
-                name: login-secret
-          readinessProbe:
-            httpGet:
-              path: /login
-              port: 8080
-            initialDelaySeconds: 45
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /login
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 20
+      - name: login-service
+        image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.login.image }}:{{ .Values.login.tag }}
+        ports:
+        - containerPort: {{ .Values.login.service.targetPort }}
+        envFrom:
+        - configMapRef:
+            name: spring-login-config
+        - secretRef:
+            name: login-secret
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: login-secret
+              key: mysql-username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: login-secret
+              key: mysql-password
+

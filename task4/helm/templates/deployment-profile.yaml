@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-profile-deployment
+  name: {{ .Values.profile.releaseName }}-deployment
 spec:
   replicas: {{ .Values.profile.replicaCount }}
   selector:
@@ -13,28 +13,24 @@ spec:
         app: spring-profile
     spec:
       containers:
-        - name: profile
-          image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.profile.image }}:{{ .Values.profile.tag }}
-          ports:
-            - containerPort: {{ .Values.profile.containerPort }}
-          env:
-            - name: MYSQL_DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: spring-profile-config
-                  key: MYSQL_DB_HOST
-            - name: MYSQL_DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: spring-profile-config
-                  key: MYSQL_DB_PORT
-            - name: MYSQL_DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: profile-secret
-                  key: mysql-username
-            - name: MYSQL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: profile-secret
-                  key: mysql-password
+      - name: profile-service
+        image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.profile.image }}:{{ .Values.profile.tag }}
+        ports:
+        - containerPort: {{ .Values.profile.service.targetPort }}
+        envFrom:
+        - configMapRef:
+            name: spring-profile-config
+        - secretRef:
+            name: profile-secret
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: profile-secret
+              key: mysql-username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: profile-secret
+              key: mysql-password
+

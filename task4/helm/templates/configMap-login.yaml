@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: spring-login-config
 data:
-  MYSQL_DB_HOST: {{ .Values.login.mysql.host | quote }}
-  MYSQL_DB_PORT: {{ .Values.login.mysql.port | quote }}
-  CHAT_ENDPOINT: {{ .Values.login.redirectHost | quote }}
+  MYSQL_DB_HOST: "mysql-login.default.svc.cluster.local"
+  MYSQL_DB_PORT: "3306"
+  MYSQL_DB_NAME: "login_db"
+  CHAT_ENDPOINT: "35.231.213.14"
