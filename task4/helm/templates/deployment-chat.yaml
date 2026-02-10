@@ -23,6 +23,20 @@ spec:
         - secretRef:
             name: chat-secret
         env:
+        - name: MYSQL_DB_NAME
+          value: "chat_db"
+        - name: MYSQL_DB_HOST
+          value: {{ .Values.chat.mysql.host | quote }}
+        - name: MYSQL_DB_PORT
+          value: {{ .Values.chat.mysql.port | quote }}
+        - name: SPRING_REDIS_HOST
+          value: {{ .Values.redis.host | quote }}
+        - name: SPRING_REDIS_PORT
+          value: {{ .Values.redis.port | quote }}
+        - name: RAW_TOPIC_MESSAGE
+          value: {{ .Values.redis.topic | quote }}
+        - name: LIST_OF_PROFILE_ENDPOINTS
+          value: {{ .Values.chat.profileEndpoints | quote }}
         - name: SPRING_REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
