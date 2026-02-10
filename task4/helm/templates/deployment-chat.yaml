@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: spring-chat-deployment
 spec:
-  replicas: 3
+  replicas: {{ .Values.chat.replicaCount | default 1 }}
   selector:
     matchLabels:
       app: spring-chat
@@ -12,31 +12,37 @@ spec:
       labels:
         app: spring-chat
     spec:
-      imagePullSecrets:    
+      imagePullSecrets:
         - name: gcr-json-key
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nslookup {{ .Values.chat.mysql.host }}; do echo waiting for mysql; sleep 2; done']
       containers:
         - name: chat-service
-          image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.chat.image }}:{{ .Values.chat.tag }}
+          image: "{{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.chat.image }}:{{ .Values.chat.tag }}"
           ports:
             - containerPort: 8080
           envFrom:
             - configMapRef:
                 name: spring-chat-config
+            - secretRef:
+                name: chat-secret
           env:
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://{{ .Values.chat.mysql.host }}:{{ .Values.chat.mysql.port }}/chatdb
-            - name: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: chat-secret
-                  key: mysql-username
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: chat-secret
-                  key: mysql-password
-            - name: REDIS_HOST
-              value: "{{ .Values.chat.redis.host }}"
-            - name: REDIS_PORT
-              value: "{{ .Values.chat.redis.port }}"
-
+                  name: {{ .Values.redis.passwordSecret }}
+                  key: {{ .Values.redis.passwordKey }}
+          readinessProbe:
+            httpGet:
+              path: /chat
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /chat
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20

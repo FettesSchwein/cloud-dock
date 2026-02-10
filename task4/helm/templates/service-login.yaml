@@ -1,1 +1,12 @@
-# TODO: Implement the service configuration for the login service
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-login-service
+spec:
+  type: {{ .Values.login.service.type }}
+  selector:
+    app: spring-login
+  ports:
+    - port: {{ .Values.login.service.port }}
+      targetPort: {{ .Values.login.service.targetPort }}
+

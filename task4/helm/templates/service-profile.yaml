@@ -1,13 +1,8 @@
-# TODO: Implement the service configuration for the profile service
 apiVersion: v1
-kind: Service
+kind: Secret
 metadata:
-  name: spring-profile-service
-spec:
-  type: NodePort
-  selector:
-    app: spring-profile
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
+  name: profile-secret
+type: Opaque
+stringData:
+  mysql-username: {{ .Values.profile.mysql.user }}
+  mysql-password: {{ .Values.profile.mysql.password }}

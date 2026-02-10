@@ -1,10 +1,9 @@
-# TODO: Implement the deployment configuration for the profile service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-profile-deployment
 spec:
-  replicas: 3
+  replicas: {{ .Values.profile.replicaCount }}
   selector:
     matchLabels:
       app: spring-profile
@@ -13,25 +12,29 @@ spec:
       labels:
         app: spring-profile
     spec:
-      imagePullSecrets:                 
-        - name: gcr-json-key
       containers:
-        - name: profile-service
+        - name: profile
           image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.profile.image }}:{{ .Values.profile.tag }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.profile.containerPort }}
           env:
-            - name: MYSQL_DB_USER
+            - name: MYSQL_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-profile-config
+                  key: MYSQL_DB_HOST
+            - name: MYSQL_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-profile-config
+                  key: MYSQL_DB_PORT
+            - name: MYSQL_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: profile-secret  
+                  name: profile-secret
                   key: mysql-username
             - name: MYSQL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: profile-secret
                   key: mysql-password
-            - name: MYSQL_DB_HOST
-              value: "{{ .Values.profile.mysql.host }}"
-            - name: MYSQL_DB_PORT
-              value: "{{ .Values.profile.mysql.port }}"

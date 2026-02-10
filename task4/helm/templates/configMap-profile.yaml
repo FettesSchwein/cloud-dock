@@ -1,1 +1,7 @@
-# TODO: Implement the configMap for profile service
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-profile-config
+data:
+  MYSQL_HOST: "{{ .Values.profile.mysql.host }}"
+  MYSQL_PORT: "{{ .Values.profile.mysql.port }}"

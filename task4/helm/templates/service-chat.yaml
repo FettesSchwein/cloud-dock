@@ -1,13 +1,11 @@
-# TODO: Implement the service configuration for the chat service
 apiVersion: v1
 kind: Service
 metadata:
   name: spring-chat-service
 spec:
-  type: NodePort
+  type: {{ .Values.chat.service.type }}
   selector:
     app: spring-chat
   ports:
-    - port: 80
-      targetPort: 8080
-
+    - port: {{ .Values.chat.service.port }}
+      targetPort: {{ .Values.chat.service.targetPort }}
