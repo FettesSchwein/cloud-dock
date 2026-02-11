@@ -55,9 +55,7 @@ chat:
     database: "test"
     user: "chatuser"
     password: "ChatPass123"
-  profileEndpoints:
-    local: "http://spring-profile-service:80/profile"
-    azure: "20.62.231.143"
+  profileEndpoints: "http://spring-profile-service:80/profile"
   hpa:
     minReplicas: 1
     maxReplicas: 2
