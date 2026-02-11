@@ -20,6 +20,9 @@ spec:
           image: "{{ .Values.redis.image }}"
           ports:
             - containerPort: {{ .Values.redis.service.targetPort }}
+          resources:
+            requests:
+              cpu: 10m
           volumeMounts:
             - mountPath: "/bitnami"
               name: cache-volume
