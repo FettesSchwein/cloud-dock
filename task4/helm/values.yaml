@@ -5,7 +5,7 @@ weCloud:
 profile:
 
   releaseName: spring-profile
-  replicaCount: 3
+  replicaCount: 1
   repository: profile-service
   image: profile-service
   tag: "1.0.0"
@@ -23,7 +23,7 @@ profile:
 chat:
 
   releaseName: spring-chat
-  replicaCount: 3
+  replicaCount: 1
   image: group-chat-service
   tag: "1.0.4"
   repository: group-chat-service
@@ -42,7 +42,7 @@ chat:
 login:
 
   releaseName: spring-login
-  replicaCount: 3
+  replicaCount: 1
   image: login-service
   tag: "1.0.4"
   repository: login-service
