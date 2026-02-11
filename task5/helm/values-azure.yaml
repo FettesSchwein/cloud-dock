@@ -2,11 +2,12 @@ global:
   environment: azure
 
 login:
-  chatEndpoint: "http://34.46.244.57/chat"
-  redirectHost: "34.46.244.57"
+  chatEndpoint: "http://136.119.155.165/chat"
+  redirectHost: "136.119.155.165"
   mysql:
     host: mysql-login
     port: "3306"
+    database: "test"
     user: "loginuser"
     password: "LoginPass123"
 
@@ -14,5 +15,6 @@ profile:
   mysql:
     host: mysql-profile
     port: "3306"
+    database: "test"
     user: "profileuser"
     password: "ProfilePass123"

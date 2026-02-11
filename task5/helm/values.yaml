@@ -29,6 +29,7 @@ profile:
   mysql:
     host: mysql-profile
     port: "3306"
+    database: "test"
     user: profileuser
     password: ProfilePass123
   hpa:
@@ -51,6 +52,7 @@ chat:
   mysql:
     host: mysql-chat
     port: "3306"
+    database: "test"
     user: "chatuser"
     password: "ChatPass123"
   profileEndpoints:
@@ -76,10 +78,11 @@ login:
   mysql:
     host: mysql-login
     port: "3306"
+    database: "test"
     user: "loginuser"
     password: "LoginPass123"
-  chatEndpoint: "http://34.9.146.235/chat"
-  redirectHost: "34.9.146.235"
+  chatEndpoint: "http://136.119.155.165/chat"
+  redirectHost: "136.119.155.165"
   hpa:
     minReplicas: 1
     maxReplicas: 2

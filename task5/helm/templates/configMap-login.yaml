@@ -5,6 +5,6 @@ metadata:
 data:
   MYSQL_DB_HOST: {{ .Values.login.mysql.host | quote }}
   MYSQL_DB_PORT: {{ .Values.login.mysql.port | quote }}
-  MYSQL_DB_NAME: "login_db"
+  MYSQL_DB_NAME: "test"
   CHAT_ENDPOINT: {{ .Values.login.chatEndpoint | quote }}
   REDIRECT_HOST: {{ .Values.login.redirectHost | quote }}

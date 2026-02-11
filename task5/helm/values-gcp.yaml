@@ -1,6 +1,15 @@
 global:
   environment: gcp
 
+profile:
+  hpa:
+    maxReplicas: 1
+
 chat:
-  profileEndpoints:
-    azure: "10.224.0.5"
+  profileEndpoints: "20.62.231.143:80"
+  hpa:
+    maxReplicas: 1
+
+login:
+  hpa:
+    maxReplicas: 1

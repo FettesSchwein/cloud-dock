@@ -3,19 +3,23 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: wecloud-ingress-azure
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /
+      - path: /login
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.login.releaseName }}
+            name: {{ .Values.login.releaseName }}-service
+            port:
+              number: 80
+      - path: /profile
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.profile.releaseName }}-service
             port:
               number: 80
 {{- end }}

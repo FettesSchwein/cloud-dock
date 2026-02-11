@@ -6,7 +6,7 @@ metadata:
 data:
   MYSQL_DB_HOST: {{ .Values.chat.mysql.host | quote }}
   MYSQL_DB_PORT: {{ .Values.chat.mysql.port | quote }}
-  MYSQL_DB_NAME: "chat_db"
+  MYSQL_DB_NAME: "test"
   SPRING_REDIS_HOST: {{ .Values.redis.host | quote }}
   SPRING_REDIS_PORT: {{ .Values.redis.port | quote }}
   RAW_TOPIC_MESSAGE: {{ .Values.redis.topic | quote }}
