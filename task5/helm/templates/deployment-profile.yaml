@@ -1,12 +1,9 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-profile-deployment
-  labels:
-    app: spring-profile
+  name: {{ .Values.profile.releaseName }}-deployment
 spec:
-  
+  replicas: {{ .Values.profile.replicaCount }}
   selector:
     matchLabels:
       app: spring-profile
@@ -15,53 +12,25 @@ spec:
       labels:
         app: spring-profile
     spec:
-      imagePullSecrets:
-        - name: gcr-json-key
       containers:
-        - name: profile-service
-          {{- if eq .Values.global.environment "azure" }}
-          image: {{ .Values.profile.repository }}:{{ .Values.profile.tag }}
-          {{- else }}
-          image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.profile.image }}:{{ .Values.profile.tag }}
-          {{- end }}
-          ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              cpu: 200m
-          resources:
-            requests:
-              cpu: 200m
-          env:
-            - name: MYSQL_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: profile-secret
-                  key: mysql-username
-            - name: MYSQL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: profile-secret
-                  key: mysql-password
-            - name: MYSQL_DB_HOST
-              value: "{{ .Values.profile.mysql.host }}"
-            - name: MYSQL_DB_PORT
-              value: "{{ .Values.profile.mysql.port }}"
-
----
-
-
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: spring-profile-autoscaling
-  namespace: default
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: spring-profile-deployment
-  minReplicas: {{ .Values.profile.hpa.minReplicas }}
-  maxReplicas: {{ .Values.profile.hpa.maxReplicas }}
-  targetCPUUtilizationPercentage: {{ .Values.profile.hpa.targetCPUUtilizationPercentage }}
+      - name: profile-service
+        image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.profile.image }}:{{ .Values.profile.tag }}
+        ports:
+        - containerPort: {{ .Values.profile.service.targetPort }}
+        envFrom:
+        - configMapRef:
+            name: spring-profile-config
+        - secretRef:
+            name: profile-secret
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: profile-secret
+              key: mysql-username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: profile-secret
+              key: mysql-password
 

@@ -1,4 +1,3 @@
-# TODO: Implement the service configuration for the profile service
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,3 +10,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
+

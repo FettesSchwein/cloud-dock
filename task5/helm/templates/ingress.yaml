@@ -2,32 +2,30 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: wecloud-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: nginx
   rules:
-  - http:
-      paths:
-      {{- if eq .Values.global.environment "gcp" }}
-      - path: /chat
-        pathType: Prefix
-        backend:
-          service:
-            name: spring-chat-service
-            port:
-              number: 8080
-      {{- end }}
-      - path: /login
-        pathType: Prefix
-        backend:
-          service:
-            name: spring-login-service
-            port:
-              number: 8080
-      - path: /profile
-        pathType: Prefix
-        backend:
-          service:
-            name: spring-profile-service
-            port:
-              number: 8080
+    - http:
+        paths:
+          - path: /chat
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-chat-service
+                port:
+                  number: 80
+          - path: /login
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-login-service
+                port:
+                  number: 80
+          - path: /profile
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-profile-service
+                port:
+                  number: 80
+

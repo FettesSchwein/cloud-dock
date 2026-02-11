@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: wecloud-ingress
   namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   ingressClassName: nginx
   rules:

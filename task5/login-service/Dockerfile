@@ -1,8 +1,8 @@
 FROM maven:3.8.4-jdk-8-slim AS build
 WORKDIR /app
-COPY ../pom.xml .
+COPY pom.xml .
 RUN mvn dependency:go-offline
-COPY ../src ./src
+COPY src ./src
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:8-jdk

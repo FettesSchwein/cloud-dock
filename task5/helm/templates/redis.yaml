@@ -1,4 +1,3 @@
-{{- if eq .Values.global.environment "gcp" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,7 +16,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: {{ .Values.redis.image }}
+          image: "{{ .Values.redis.image }}"
           ports:
             - containerPort: {{ .Values.redis.service.targetPort }}
           volumeMounts:
@@ -52,5 +51,4 @@ metadata:
   name: {{ .Values.redis.passwordSecret }}
 type: Opaque
 data:
-  {{ .Values.redis.passwordKey }}: {{ .Values.redis.password | b64enc }}
-{{- end }}
+  {{ .Values.redis.passwordKey }}: U3VwZXJTZWNyZXRSZWRpc1Bhc3N3b3Jk
