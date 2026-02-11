@@ -69,6 +69,7 @@ login:
     port: "3306"
     user: "loginuser"
     password: "LoginPass123"
+  redirectHost: "136.119.155.165"
   hpa:
     minReplicas: 1
     maxReplicas: 5
