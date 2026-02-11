@@ -1,17 +1,11 @@
 global:
-  environment: gcp
+    environment: gcp
 
 chat:
-  
-  image: "chat-service"
-  tag: "1.0.0"
+# TODO: add environment-specific values if any
 
 login:
-  
-  image: "login-service"
-  tag: "1.0.0"
+# TODO: add environment-specific values if any
 
 profile:
-  
-  image: "profile-service"
-  tag: "1.0.0"
+# TODO: add environment-specific values if any

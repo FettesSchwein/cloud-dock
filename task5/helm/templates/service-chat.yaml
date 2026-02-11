@@ -1,3 +1,4 @@
+{{- if eq .Values.global.environment "gcp" }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,3 +10,4 @@ spec:
   ports:
     - port: {{ .Values.chat.service.port }}
       targetPort: {{ .Values.chat.service.targetPort }}
+{{- end }}

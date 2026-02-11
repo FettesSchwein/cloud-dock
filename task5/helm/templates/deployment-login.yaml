@@ -33,4 +33,22 @@ spec:
             secretKeyRef:
               name: login-secret
               key: mysql-password
+        resources:
+          requests:
+            cpu: {{ .Values.login.hpa.cpuRequest }}
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.login.releaseName }}-autoscaling
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.login.releaseName }}-deployment
+  minReplicas: {{ .Values.login.hpa.minReplicas }}
+  maxReplicas: {{ .Values.login.hpa.maxReplicas }}
+  targetCPUUtilizationPercentage: {{ .Values.login.hpa.targetCPUUtilizationPercentage }}
 

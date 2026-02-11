@@ -1,3 +1,4 @@
+{{- if eq .Values.global.environment "gcp" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,3 +53,4 @@ metadata:
 type: Opaque
 data:
   {{ .Values.redis.passwordKey }}: U3VwZXJTZWNyZXRSZWRpc1Bhc3N3b3Jk
+{{- end }}

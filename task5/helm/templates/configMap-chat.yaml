@@ -1,3 +1,4 @@
+{{- if eq .Values.global.environment "gcp" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -18,3 +19,4 @@ data:
   MYSQL_DB_PORT: "{{ .Values.chat.mysql.port }}"
   REDIS_HOST: "{{ .Values.chat.redis.host }}"
   REDIS_PORT: "{{ .Values.chat.redis.port }}"
+{{- end }}
