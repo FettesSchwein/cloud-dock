@@ -1,23 +1,21 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
 metadata:
   name: wecloud-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /login
-        pathType: Prefix
+      - path: /login(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: spring-login-service
             port:
               number: 80
-      - path: /profile
-        pathType: Prefix
+      - path: /profile(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: spring-profile-service
