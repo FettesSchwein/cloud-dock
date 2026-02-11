@@ -14,7 +14,11 @@ spec:
     spec:
       containers:
       - name: login-service
+        {{- if eq .Values.global.environment "gcp" }}
         image: {{ .Values.weCloud.imageRegistry.gcp }}/{{ .Values.login.image }}:{{ .Values.login.tag }}
+        {{- else }}
+        image: {{ .Values.weCloud.imageRegistry.azure }}/{{ .Values.login.image }}:{{ .Values.login.tag }}
+        {{- end }}
         ports:
         - containerPort: {{ .Values.login.service.targetPort }}
         envFrom:

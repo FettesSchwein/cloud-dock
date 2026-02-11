@@ -1,8 +1,8 @@
 global:
     environment: gcp
 
-# chat:
-# # TODO: add environment-specific values if any
+chat:
+  profileEndpoints: "20.62.231.143:80/profile"
 
 # login:
 # # TODO: add environment-specific values if any
