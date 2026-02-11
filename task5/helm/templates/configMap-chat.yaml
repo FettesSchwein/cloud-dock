@@ -10,5 +10,5 @@ data:
   SPRING_REDIS_HOST: {{ .Values.redis.host | quote }}
   SPRING_REDIS_PORT: {{ .Values.redis.port | quote }}
   RAW_TOPIC_MESSAGE: {{ .Values.redis.topic | quote }}
-  LIST_OF_PROFILE_ENDPOINTS: "{{ .Values.chat.profileEndpoints.local }},http://{{ .Values.chat.profileEndpoints.azure }}/profile"
+  LIST_OF_PROFILE_ENDPOINTS: {{ .Values.chat.profileEndpoints | quote }}
 {{- end }}
