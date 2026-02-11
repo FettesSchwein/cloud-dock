@@ -1,11 +1,11 @@
 global:
     environment: gcp
 
-chat:
-# TODO: add environment-specific values if any
+# chat:
+# # TODO: add environment-specific values if any
 
-login:
-# TODO: add environment-specific values if any
+# login:
+# # TODO: add environment-specific values if any
 
-profile:
-# TODO: add environment-specific values if any
+# profile:
+# # TODO: add environment-specific values if any
