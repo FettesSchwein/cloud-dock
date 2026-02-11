@@ -27,12 +27,12 @@ spec:
         - secretRef:
             name: profile-secret
         env:
-        - name: MYSQL_USER
+        - name: MYSQL_DB_USER
           valueFrom:
             secretKeyRef:
               name: profile-secret
               key: mysql-username
-        - name: MYSQL_PASSWORD
+        - name: MYSQL_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: profile-secret

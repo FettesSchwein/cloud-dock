@@ -43,12 +43,12 @@ spec:
             secretKeyRef:
               name: {{ .Values.redis.passwordSecret }}
               key: {{ .Values.redis.passwordKey }}
-        - name: MYSQL_USER
+        - name: MYSQL_DB_USER
           valueFrom:
             secretKeyRef:
               name: chat-secret
               key: mysql-username
-        - name: MYSQL_PASSWORD
+        - name: MYSQL_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: chat-secret
