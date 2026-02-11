@@ -1,6 +1,9 @@
 global:
   environment: azure
 
+glogin:
+  chatEndpoint: "136.119.155.165:80/chat"re
+
 weCloud:
   imageRegistry:
     azure: wecloudacr486615.azurecr.io
