@@ -35,7 +35,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "wecloudbackendloginprofile" {
   load_balancing {
     sample_size                 = 4
     successful_samples_required = 2
-    additional_latency_in_ms    = 50
+    additional_latency_in_milliseconds    = 50
   }
 
   health_probe {
@@ -80,7 +80,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "wecloudbackendchat" {
   load_balancing {
     sample_size                 = 4
     successful_samples_required = 2
-    additional_latency_in_ms    = 50
+    additional_latency_in_milliseconds    = 50
   }
 
   health_probe {
