@@ -25,7 +25,7 @@ spec:
             name: chat-secret
         env:
         - name: MYSQL_DB_NAME
-          value: "test"
+          value: "chat_db"
         - name: MYSQL_DB_HOST
           value: {{ .Values.chat.mysql.host | quote }}
         - name: MYSQL_DB_PORT

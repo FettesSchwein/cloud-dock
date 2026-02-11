@@ -5,4 +5,4 @@ metadata:
 data:
   MYSQL_DB_HOST: {{ .Values.profile.mysql.host | quote }}
   MYSQL_DB_PORT: {{ .Values.profile.mysql.port | quote }}
-  MYSQL_DB_NAME: "test"
+  MYSQL_DB_NAME: "profile_db"

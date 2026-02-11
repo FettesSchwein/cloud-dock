@@ -7,7 +7,7 @@ login:
   mysql:
     host: mysql-login
     port: "3306"
-    database: "test"
+    database: "login_db"
     user: "loginuser"
     password: "LoginPass123"
 
@@ -15,6 +15,6 @@ profile:
   mysql:
     host: mysql-profile
     port: "3306"
-    database: "test"
+    database: "profile_db"
     user: "profileuser"
     password: "ProfilePass123"

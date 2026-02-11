@@ -29,7 +29,7 @@ profile:
   mysql:
     host: mysql-profile
     port: "3306"
-    database: "test"
+    database: "profile_db"
     user: profileuser
     password: ProfilePass123
   hpa:
@@ -52,7 +52,7 @@ chat:
   mysql:
     host: mysql-chat
     port: "3306"
-    database: "test"
+    database: "chat_db"
     user: "chatuser"
     password: "ChatPass123"
   profileEndpoints: "http://spring-profile-service:80/profile"
@@ -76,7 +76,7 @@ login:
   mysql:
     host: mysql-login
     port: "3306"
-    database: "test"
+    database: "login_db"
     user: "loginuser"
     password: "LoginPass123"
   chatEndpoint: "http://136.119.155.165/chat"
