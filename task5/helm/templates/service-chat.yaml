@@ -8,6 +8,7 @@ spec:
   selector:
     app: spring-chat
   ports:
-    - port: {{ .Values.chat.service.port }}
-      targetPort: {{ .Values.chat.service.targetPort }}
+  - protocol: TCP
+    port: {{ .Values.chat.service.port }}
+    targetPort: {{ .Values.chat.service.targetPort }}
 {{- end }}

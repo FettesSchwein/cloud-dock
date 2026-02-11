@@ -1,27 +1,18 @@
 global:
   environment: azure
 
-
-
-weCloud:
-  imageRegistry:
-    azure: wecloudacr486615.azurecr.io
-
-chat:
-  # Chat service is not deployed on Azure
-
 login:
-  # MySQL values for Azure (will be installed separately)
+  chatEndpoint: "http://34.46.244.57/chat"
+  redirectHost: "34.46.244.57"
   mysql:
-    host: mysql-login.default.svc.cluster.local
+    host: mysql-login
     port: "3306"
     user: "loginuser"
     password: "LoginPass123"
 
 profile:
-  # MySQL values for Azure (will be installed separately)
   mysql:
-    host: mysql-profile.default.svc.cluster.local
+    host: mysql-profile
     port: "3306"
     user: "profileuser"
     password: "ProfilePass123"
