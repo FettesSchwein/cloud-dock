@@ -79,7 +79,7 @@ login:
     database: "login_db"
     user: "loginuser"
     password: "LoginPass123"
-  chatEndpoint: "http://34.9.146.235/chat"
+  chatEndpoint: "34.9.146.235"
   redirectHost: "34.9.146.235"
   hpa:
     minReplicas: 1

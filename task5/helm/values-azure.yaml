@@ -2,7 +2,7 @@ global:
   environment: azure
 
 login:
-  chatEndpoint: "http://34.9.146.235/chat"
+  chatEndpoint: "34.9.146.235"
   redirectHost: "34.9.146.235"
   mysql:
     host: mysql-login
