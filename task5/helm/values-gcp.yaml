@@ -1,11 +1,15 @@
 global:
     environment: gcp
 
+profile:
+  hpa:
+    maxReplicas: 2
+
 chat:
   profileEndpoints: "20.62.231.143:80/profile"
+  hpa:
+    maxReplicas: 2
 
-# login:
-# # TODO: add environment-specific values if any
-
-# profile:
-# # TODO: add environment-specific values if any
+login:
+  hpa:
+    maxReplicas: 2
