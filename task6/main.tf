@@ -33,11 +33,16 @@ resource "azurerm_cdn_frontdoor_origin_group" "wecloudbackendloginprofile" {
   session_affinity_enabled = true
 
   load_balancing {
-    // TODO
+    sample_size                 = 4
+    successful_samples_required = 2
+    additional_latency_in_ms    = 50
   }
 
   health_probe {
-    // TODO
+    path                = "/login"
+    protocol            = "Http"
+    request_type        = "HEAD"
+    interval_in_seconds = 30
   }
 }
 
@@ -50,7 +55,8 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendloginprofileGCP" {
   certificate_name_check_enabled = false
   host_name                      = var.gcp_ingress_external_ip
   origin_host_header             = var.gcp_ingress_external_ip
-  // TODO
+  http_port                      = 80
+  https_port                     = 443
 }
 
 resource "azurerm_cdn_frontdoor_origin" "wecloudbackendloginprofileAZURE" {
@@ -61,7 +67,8 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendloginprofileAZURE" {
   certificate_name_check_enabled = false
   host_name                      = var.azure_ingress_external_ip
   origin_host_header             = var.azure_ingress_external_ip
-  // TODO
+  http_port                      = 80
+  https_port                     = 443
 }
 
 # 7. Create an Azure Front Door Origin Group for Chat with Load balancing and Health Probe for Chat endpoint
@@ -71,11 +78,16 @@ resource "azurerm_cdn_frontdoor_origin_group" "wecloudbackendchat" {
   session_affinity_enabled = true
 
   load_balancing {
-    // TODO
+    sample_size                 = 4
+    successful_samples_required = 2
+    additional_latency_in_ms    = 50
   }
 
   health_probe {
-    // TODO
+    path                = "/chat"
+    protocol            = "Http"
+    request_type        = "HEAD"
+    interval_in_seconds = 30
   }
 }
 
@@ -88,17 +100,32 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendchatGCP" {
   certificate_name_check_enabled = false
   host_name                      = var.gcp_ingress_external_ip
   origin_host_header             = var.gcp_ingress_external_ip
-  // TODO
+  http_port                      = 80
+  https_port                     = 443
 }
 
 # 9. Create an Azure Front Door Routing rule resource for Login and Profile endpoint
 resource "azurerm_cdn_frontdoor_route" "loginprofilerouting" {
   name                          = "loginprofilerouting"
-  // TODO
+  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontendEndpoint.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendloginprofile.id
+  cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileGCP.id, azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileAZURE.id]
+
+  patterns_to_match     = ["/login", "/profile"]
+  supported_protocols   = ["Http"]
+  forwarding_protocol   = "HttpOnly"
+  https_redirect_enabled = false
 }
 
 # 10. Create an Azure Front Door Routing rule resource for Chat endpoint
 resource "azurerm_cdn_frontdoor_route" "chatrouting" {
   name                          = "chatrouting"
-  // TODO
+  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontendEndpoint.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendchat.id
+  cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendchatGCP.id]
+
+  patterns_to_match     = ["/chat", "/chat/*"]
+  supported_protocols   = ["Http"]
+  forwarding_protocol   = "HttpOnly"
+  https_redirect_enabled = false
 }

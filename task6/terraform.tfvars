@@ -1,0 +1,5 @@
+frontdoor_name           = "wecloud-fd-4866"
+frontdoor_endpoint       = "wecloud-endpoint-4866"
+resource_group_name     = "wecloud-rg"
+gcp_ingress_external_ip  = "34.9.146.235"
+azure_ingress_external_ip = "20.62.231.143"
