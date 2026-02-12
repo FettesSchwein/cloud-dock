@@ -57,6 +57,7 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendloginprofileGCP" {
   enabled                        = true
   certificate_name_check_enabled = false
   host_name                      = var.gcp_ingress_external_ip
+  origin_host_header             = var.gcp_ingress_external_ip
   http_port                      = 80
   https_port                     = 443
 }
@@ -68,6 +69,7 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendloginprofileAZURE" {
   enabled                        = true
   certificate_name_check_enabled = false
   host_name                      = var.azure_ingress_external_ip
+  origin_host_header             = var.azure_ingress_external_ip
   http_port                      = 80
   https_port                     = 443
 }
@@ -100,6 +102,7 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendchatGCP" {
   enabled                        = true
   certificate_name_check_enabled = false
   host_name                      = var.gcp_ingress_external_ip
+  origin_host_header             = var.gcp_ingress_external_ip
   http_port                      = 80
   https_port                     = 443
 }
