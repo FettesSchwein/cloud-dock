@@ -109,6 +109,7 @@ resource "azurerm_cdn_frontdoor_route" "loginprofilerouting" {
   name                          = "loginprofilerouting"
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontendEndpoint.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendloginprofile.id
+  cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileGCP.id, azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileAZURE.id]
 
   patterns_to_match     = ["/login", "/profile"]
   supported_protocols   = ["Http"]
@@ -121,6 +122,7 @@ resource "azurerm_cdn_frontdoor_route" "chatrouting" {
   name                          = "chatrouting"
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontendEndpoint.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendchat.id
+  cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendchatGCP.id]
 
   patterns_to_match     = ["/chat", "/chat/*"]
   supported_protocols   = ["Http"]
