@@ -38,7 +38,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "wecloudbackendloginprofile" {
   load_balancing {
     sample_size                 = 4
     successful_samples_required = 2
-    additional_latency_in_milliseconds    = 50
+    additional_latency_in_milliseconds    = 100
   }
 
   health_probe {
@@ -83,7 +83,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "wecloudbackendchat" {
   load_balancing {
     sample_size                 = 4
     successful_samples_required = 2
-    additional_latency_in_milliseconds    = 50
+    additional_latency_in_milliseconds    = 100
   }
 
   health_probe {
@@ -114,8 +114,8 @@ resource "azurerm_cdn_frontdoor_route" "loginprofilerouting" {
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendloginprofile.id
   cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileGCP.id, azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileAZURE.id]
 
-  patterns_to_match     = ["/login", "/profile"]
-  supported_protocols   = ["Http"]
+  patterns_to_match     = ["/login", "/login/*", "/profile", "/profile/*"]
+  supported_protocols   = ["Http", "Https"]
   forwarding_protocol   = "HttpOnly"
   https_redirect_enabled = false
 }
@@ -128,7 +128,7 @@ resource "azurerm_cdn_frontdoor_route" "chatrouting" {
   cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendchatGCP.id]
 
   patterns_to_match     = ["/chat", "/chat/*"]
-  supported_protocols   = ["Http"]
+  supported_protocols   = ["Http", "Https"]
   forwarding_protocol   = "HttpOnly"
   https_redirect_enabled = false
 }
