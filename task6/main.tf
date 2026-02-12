@@ -18,6 +18,9 @@ resource "azurerm_cdn_frontdoor_profile" "frontdoor" {
   name                = var.frontdoor_name
   resource_group_name = var.resource_group_name
   sku_name = "Standard_AzureFrontDoor"
+  tags = {
+    Environment = "Production"
+  }
 }
 
 # 4. Create an Azure Front Door Endpoint for the Front Door instance
