@@ -57,7 +57,6 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendloginprofileGCP" {
   enabled                        = true
   certificate_name_check_enabled = false
   host_name                      = var.gcp_ingress_external_ip
-  host_name                      = var.gcp_ingress_external_ip
   http_port                      = 80
   https_port                     = 443
 }
@@ -101,7 +100,6 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendchatGCP" {
   enabled                        = true
   certificate_name_check_enabled = false
   host_name                      = var.gcp_ingress_external_ip
-  host_name                      = var.gcp_ingress_external_ip
   http_port                      = 80
   https_port                     = 443
 }
@@ -110,7 +108,6 @@ resource "azurerm_cdn_frontdoor_origin" "wecloudbackendchatGCP" {
 resource "azurerm_cdn_frontdoor_route" "loginprofilerouting" {
   name                          = "loginprofilerouting"
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontendEndpoint.id
-  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendloginprofile.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendloginprofile.id
 
   patterns_to_match     = ["/login", "/profile"]
@@ -123,7 +120,6 @@ resource "azurerm_cdn_frontdoor_route" "loginprofilerouting" {
 resource "azurerm_cdn_frontdoor_route" "chatrouting" {
   name                          = "chatrouting"
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontendEndpoint.id
-  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendchat.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendchat.id
 
   patterns_to_match     = ["/chat", "/chat/*"]
