@@ -114,8 +114,8 @@ resource "azurerm_cdn_frontdoor_route" "loginprofilerouting" {
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wecloudbackendloginprofile.id
   cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileGCP.id, azurerm_cdn_frontdoor_origin.wecloudbackendloginprofileAZURE.id]
 
-  patterns_to_match     = ["/login", "/login/*", "/profile", "/profile/*"]
-  supported_protocols   = ["Http", "Https"]
+  patterns_to_match     = ["/login", "/profile"]
+  supported_protocols   = ["Http"]
   forwarding_protocol   = "HttpOnly"
   https_redirect_enabled = false
 }
@@ -128,7 +128,7 @@ resource "azurerm_cdn_frontdoor_route" "chatrouting" {
   cdn_frontdoor_origin_ids       = [azurerm_cdn_frontdoor_origin.wecloudbackendchatGCP.id]
 
   patterns_to_match     = ["/chat", "/chat/*"]
-  supported_protocols   = ["Http", "Https"]
+  supported_protocols   = ["Http"]
   forwarding_protocol   = "HttpOnly"
   https_redirect_enabled = false
 }
